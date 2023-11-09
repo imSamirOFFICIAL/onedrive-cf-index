@@ -192,23 +192,20 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
 
   if ('folder' in responses[0]) {
     // Expand list of API returns into flattened file data
-    const folderChildren = [].concat(...responses.map(r => r.folder.value)) as OdFolderObject['value'];
+    const folderChildren = [].concat(...responses.map(r => r.folder.value)) as OdFolderObject['value']
+
+    // Find README.md file to render
+    const readmeFile = folderChildren.find(c => c.name.toLowerCase() === 'readme.md')
 
     // Filtered file list helper
-    const getFiles = () => folderChildren.filter(c => !c.folder && c.name !== '.password');
-
-    // Filter files to display only ".mkv" and ".mp4" files
-    const filteredFiles = getFiles().filter(c => {
-      const extension = getRawExtension(c.name);
-      return extension === 'mkv' || extension === 'mp4';
-    });
+    const getFiles = () => folderChildren.filter(c => !c.folder && c.name !== '.password')
 
     // File selection
     const genTotalSelected = (selected: { [key: string]: boolean }) => {
-      const selectInfo = filteredFiles.map(c => Boolean(selected[c.id]));
-      const [hasT, hasF] = [selectInfo.some(i => i), selectInfo.some(i => !i)];
-      return hasT && hasF ? 1 : !hasF ? 2 : 0;
-    };
+      const selectInfo = getFiles().map(c => Boolean(selected[c.id]))
+      const [hasT, hasF] = [selectInfo.some(i => i), selectInfo.some(i => !i)]
+      return hasT && hasF ? 1 : !hasF ? 2 : 0
+    }
 
     const toggleItemSelected = (id: string) => {
       let val: SetStateAction<{ [key: string]: boolean }>
@@ -321,7 +318,7 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
     const folderProps = {
       toast,
       path,
-      folderChildren: filteredFiles,
+      folderChildren,
       selected,
       toggleItemSelected,
       totalSelected,
@@ -331,7 +328,7 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
       folderGenerating,
       handleSelectedPermalink,
       handleFolderDownload,
-    };
+    }
 
     return (
       <>

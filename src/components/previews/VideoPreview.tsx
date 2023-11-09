@@ -62,7 +62,7 @@ const VideoPlayer: FC<{
   const plyrOptions: Plyr.Options = {
     ratio: `${width ?? 16}:${height ?? 9}`,
     fullscreen: { iosNative: true },
-    controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'fullscreen'],
+    controls: ['play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'captions', 'fullscreen'],
     displayDuration: true,
     invertTime: false,
   };

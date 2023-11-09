@@ -66,7 +66,7 @@ const Navbar = () => {
           >
             <div className="flex items-center space-x-2">
               <FontAwesomeIcon className="h-4 w-4" icon="search" />
-              <span className="truncate text-sm font-medium">{'Search ...'}</span>
+              <span className="truncate text-sm font-medium">{'Search'}</span>
             </div>
           </button>
 

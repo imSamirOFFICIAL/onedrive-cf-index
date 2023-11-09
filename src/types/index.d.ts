@@ -53,7 +53,6 @@ export type OdThumbnail = {
   medium: { height: number; width: number; url: string }
   small: { height: number; width: number; url: string }
 }
-// API response object for /api/search/?q=<query>. Likewise, this array of items may also contain either files or folders.
 export type OdSearchResult = Array<{
   id: string
   name: string

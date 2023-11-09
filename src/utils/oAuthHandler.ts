@@ -42,7 +42,6 @@ export function extractAuthCodeFromRedirected(url: string): string {
     return ''
   }
 
-  // New URL search parameter
   const params = new URLSearchParams(url.split('?')[1])
   return params.get('code') ?? ''
 }

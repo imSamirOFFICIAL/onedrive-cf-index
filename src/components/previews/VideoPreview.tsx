@@ -57,7 +57,11 @@ const VideoPlayer: FC<{
     type: 'video',
     title: videoName,
     poster: thumbnail,
-    tracks: [{ kind: 'captions', label: videoName, src: '', default: true }],
+    tracks: [
+      { kind: 'captions', label: videoName, src: '', default: true },
+      // Add a track for SubRip (.srt) subtitles
+      { kind: 'subtitles', label: 'SubRip', src: subtitle.replace('.vtt', '.srt'), srclang: 'en', default: false },
+    ],
   }
   const plyrOptions: Plyr.Options = {
     ratio: `${width ?? 16}:${height ?? 9}`,

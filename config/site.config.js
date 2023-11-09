@@ -13,6 +13,8 @@ module.exports = {
   googleFontMono: 'Fira Mono',
   googleFontLinks: ['https://fonts.googleapis.com/css2?family=Fira+Mono&family=Inter:wght@400;500;700&display=swap'],
 
+  protectedRoutes: ['/Private', '/Demo/😎Another Private Folder Password 123'],
+
   email: '',
 
   links: [

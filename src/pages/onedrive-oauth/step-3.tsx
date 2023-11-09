@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import siteConfig from '../../../config/site.config'
 import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
-
 import { getAuthPersonInfo, requestTokenWithAuthCode, sendTokenToServer } from '../../utils/oAuthHandler'
 import { LoadingIcon } from '../../components/Loading'
 
@@ -177,8 +175,6 @@ export default function OAuthStep3({ accessToken, expiryTime, refreshToken, erro
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

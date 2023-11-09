@@ -3,7 +3,6 @@ import Head from 'next/head'
 import siteConfig from '../../config/site.config'
 import Navbar from '../components/Navbar'
 import FileListing from '../components/FileListing'
-import Footer from '../components/Footer'
 import Breadcrumb from '../components/Breadcrumb'
 import SwitchLayout from '../components/SwitchLayout'
 
@@ -24,8 +23,6 @@ export default function Home() {
           <FileListing />
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

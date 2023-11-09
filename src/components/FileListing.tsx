@@ -70,12 +70,12 @@ const formatChildName = (name: string) => {
   return render ? name.replace(emoji ? emoji[0] : '', '').trim() : name
 }
 export const ChildName: FC<{ name: string; folder?: boolean }> = ({ name, folder }) => {
-  const original = formatChildName(name)
-  const extension = folder ? '' : getRawExtension(original)
-  const prename = folder ? original : original.substring(0, original.length - extension.length)
+  const original = formatChildName(name);
+  const fileNameWithoutExtension = folder ? original : original.replace(/\..+$/, ''); // Remove file extension
+
   return (
-    <span className="truncate before:float-right before:content-[attr(data-tail)]" data-tail={extension}>
-      {prename}
+    <span className="truncate before:float-right before:content-[attr(data-tail)]">
+      {fileNameWithoutExtension}
     </span>
   )
 }

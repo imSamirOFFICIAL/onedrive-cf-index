@@ -57,7 +57,7 @@ const VideoPlayer: FC<{
     type: 'video',
     title: videoName,
     poster: thumbnail,
-    tracks: [{ kind: 'captions', label: videoName, src: '', default: true }],
+    tracks: [{ kind: 'captions', label: 'Enabled', src: '', default: true }],
   }
   const plyrOptions: Plyr.Options = {
     ratio: `${width ?? 16}:${height ?? 9}`,

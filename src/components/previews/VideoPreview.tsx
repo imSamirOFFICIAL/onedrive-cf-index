@@ -28,6 +28,17 @@ const VideoPlayer: FC<{
   isFlv: boolean
   mpegts: any
 }> = ({ videoName, videoUrl, width, height, thumbnail, subtitle, isFlv, mpegts }) => {
+  const [plyr, setPlyr] = useState<Plyr | null>(null);
+
+  const setupPlyr = (player: Plyr) => {
+    setPlyr(player);
+
+    // Enable captions programmatically
+    if (player) {
+      player.toggleCaptions(true);
+    }
+  };
+
   useEffect(() => {
     // Really really hacky way to inject subtitles as file blobs into the video element
     axios
@@ -57,18 +68,20 @@ const VideoPlayer: FC<{
     type: 'video',
     title: videoName,
     poster: thumbnail,
-    tracks: [{ kind: 'captions', label: 'Enabled', src: '', default: true }],
+    tracks: [{ kind: 'captions', label: videoName, src: '', default: true }],
   }
   const plyrOptions: Plyr.Options = {
     ratio: `${width ?? 16}:${height ?? 9}`,
     fullscreen: { iosNative: true },
-    controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'fullscreen'],
-  };
+    controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'fullscreen'],
+    settings: [], // Remove 'settings' from the 'controls' array to hide the settings button.
+  }
   if (!isFlv) {
     // If the video is not in flv format, we can use the native plyr and add sources directly with the video URL
     plyrSource['sources'] = [{ src: videoUrl }]
   }
-  return <Plyr id="plyr" source={plyrSource as Plyr.SourceInfo} options={plyrOptions} />
+
+  return <Plyr id="plyr" source={plyrSource as Plyr.SourceInfo} options={plyrOptions} onReady={setupPlyr} />;
 }
 
 const VideoPreview: FC<{ file: OdFileObject }> = ({ file }) => {

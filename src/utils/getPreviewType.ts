@@ -87,8 +87,6 @@ export function getPreviewType(extension: string, flags?: { video?: boolean }): 
     return previewType
   }
 
-  // Files with '.ts' extensions may be TypeScript files or TS Video files, we check for the flag 'video'
-  // to determine what preview renderer to use for '.ts' files.
   if (extension === 'ts') {
     if (flags?.video) {
       previewType = preview.video

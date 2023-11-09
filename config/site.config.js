@@ -15,12 +15,5 @@ module.exports = {
 
   protectedRoutes: ['/Private', '/Demo/😎Another Private Folder Password 123'],
 
-  links: [
-    {
-      name: 'GitHub',
-      link: 'https://github.com/lyc8503',
-    },
-  ],
-
   datetimeFormat: 'YYYY-MM-DD HH:mm:ss',
 }

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const HomeCrumb = () => {
   return (
     <Link href="/" className="flex items-center">
-      <FontAwesomeIcon className="h-3 w-3" icon={['far', 'flag']} />
+      <FontAwesomeIcon className="h-3 w-3" icon={['fas', 'house']} />
       <span className="ml-2 font-medium">{'Home'}</span>
     </Link>
   )

@@ -20,12 +20,6 @@ const FileListItem: FC<{ fileContent: OdFolderChildren }> = ({ fileContent: c })
         </div>
         <ChildName name={c.name} folder={Boolean(c.folder)} />
       </div>
-      <div className="col-span-3 hidden flex-shrink-0 font-mono text-sm text-gray-700 dark:text-gray-500 md:block">
-        {formatModifiedDateTime(c.lastModifiedDateTime)}
-      </div>
-      <div className="col-span-1 hidden flex-shrink-0 truncate font-mono text-sm text-gray-700 dark:text-gray-500 md:block">
-        {humanFileSize(c.size)}
-      </div>
     </div>
   )
 }
@@ -56,48 +50,6 @@ const FolderListLayout = ({
         <div className="col-span-12 py-2 text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-300 md:col-span-6">
           {'Name'}
         </div>
-        <div className="col-span-3 hidden text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-300 md:block">
-          {'Last Modified'}
-        </div>
-        <div className="hidden text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-300 md:block">
-          {'Size'}
-        </div>
-        <div className="hidden text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-300 md:block">
-          {'Actions'}
-        </div>
-        <div className="hidden text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-300 md:block">
-          <div className="hidden p-1.5 text-gray-700 dark:text-gray-400 md:flex">
-            <Checkbox
-              checked={totalSelected}
-              onChange={toggleTotalSelected}
-              indeterminate={true}
-              title={'Select files'}
-            />
-            <button
-              title={'Copy selected files permalink'}
-              className="cursor-pointer rounded p-1.5 hover:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-400 disabled:hover:bg-white dark:hover:bg-gray-600 disabled:dark:text-gray-600 disabled:hover:dark:bg-gray-900"
-              disabled={totalSelected === 0}
-              onClick={() => {
-                clipboard.copy(handleSelectedPermalink(getBaseUrl()))
-                toast.success('Copied selected files permalink.')
-              }}
-            >
-              <FontAwesomeIcon icon={['far', 'copy']} size="lg" />
-            </button>
-            {totalGenerating ? (
-              <Downloading title={'Downloading selected files, refresh page to cancel'} style="p-1.5" />
-            ) : (
-              <button
-                title={'Download selected files'}
-                className="cursor-pointer rounded p-1.5 hover:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-400 disabled:hover:bg-white dark:hover:bg-gray-600 disabled:dark:text-gray-600 disabled:hover:dark:bg-gray-900"
-                disabled={totalSelected === 0}
-                onClick={handleSelectedDownload}
-              >
-                <FontAwesomeIcon icon={['far', 'arrow-alt-circle-down']} size="lg" />
-              </button>
-            )}
-          </div>
-        </div>
       </div>
 
       {folderChildren.map((c: OdFolderChildren) => (
@@ -111,67 +63,7 @@ const FolderListLayout = ({
             className="col-span-12 md:col-span-10"
           >
             <FileListItem fileContent={c} />
-          </Link>
-
-          {c.folder ? (
-            <div className="hidden p-1.5 text-gray-700 dark:text-gray-400 md:flex">
-              <span
-                title={'Copy folder permalink'}
-                className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600"
-                onClick={() => {
-                  clipboard.copy(`${getBaseUrl()}${`${path === '/' ? '' : path}/${encodeURIComponent(c.name)}`}`)
-                  toast('Copied folder permalink.', { icon: '👌' })
-                }}
-              >
-                <FontAwesomeIcon icon={['far', 'copy']} />
-              </span>
-              {folderGenerating[c.id] ? (
-                <Downloading title={'Downloading folder, refresh page to cancel'} style="px-1.5 py-1" />
-              ) : (
-                <span
-                  title={'Download folder'}
-                  className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600"
-                  onClick={() => {
-                    const p = `${path === '/' ? '' : path}/${encodeURIComponent(c.name)}`
-                    handleFolderDownload(p, c.id, c.name)()
-                  }}
-                >
-                  <FontAwesomeIcon icon={['far', 'arrow-alt-circle-down']} />
-                </span>
-              )}
-            </div>
-          ) : (
-            <div className="hidden p-1.5 text-gray-700 dark:text-gray-400 md:flex">
-              <span
-                title={'Copy raw file permalink'}
-                className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600"
-                onClick={() => {
-                  clipboard.copy(
-                    `${getBaseUrl()}/api/raw?path=${getItemPath(c.name)}${hashedToken ? `&odpt=${hashedToken}` : ''}`
-                  )
-                  toast.success('Copied raw file permalink.')
-                }}
-              >
-                <FontAwesomeIcon icon={['far', 'copy']} />
-              </span>
-              <a
-                title={'Download file'}
-                className="cursor-pointer rounded px-1.5 py-1 hover:bg-gray-300 dark:hover:bg-gray-600"
-                href={`/api/raw?path=${getItemPath(c.name)}${hashedToken ? `&odpt=${hashedToken}` : ''}`}
-              >
-                <FontAwesomeIcon icon={['far', 'arrow-alt-circle-down']} />
-              </a>
-            </div>
-          )}
-          <div className="hidden p-1.5 text-gray-700 dark:text-gray-400 md:flex">
-            {!c.folder && !(c.name === '.password') && (
-              <Checkbox
-                checked={selected[c.id] ? 2 : 0}
-                onChange={() => toggleItemSelected(c.id)}
-                title={'Select file'}
-              />
-            )}
-          </div>
+          </Link>          
         </div>
       ))}
     </div>

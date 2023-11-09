@@ -15,8 +15,6 @@ module.exports = {
 
   protectedRoutes: ['/Private', '/Demo/😎Another Private Folder Password 123'],
 
-  email: '',
-
   links: [
     {
       name: 'GitHub',

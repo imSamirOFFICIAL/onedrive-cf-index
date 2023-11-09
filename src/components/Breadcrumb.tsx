@@ -14,7 +14,7 @@ const HomeCrumb = () => {
 
 const Breadcrumb: React.FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
   if (query) {
-    const { path } = query
+    const { path } = query;
     if (Array.isArray(path)) {
       // We are rendering the path in reverse, so that the browser automatically scrolls to the end of the breadcrumb
       // https://stackoverflow.com/questions/18614301/keep-overflow-div-scrolled-to-bottom-unless-user-scrolls-up/18614561
@@ -23,28 +23,33 @@ const Breadcrumb: React.FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
           {path
             .slice(0)
             .reverse()
-            .map((p: string, i: number) => (
-              <li key={i} className="flex flex-shrink-0 items-center">
-                <FontAwesomeIcon className="h-3 w-3" icon="angle-right" />
-                <Link
-                  href={`/${path
-                    .slice(0, path.length - i)
-                    .map(p => encodeURIComponent(p))
-                    .join('/')}`}
-                  passHref
-                  className={`ml-1 transition-all duration-75 hover:opacity-70 md:ml-3 ${
-                    i == 0 && 'pointer-events-none opacity-80'
-                  }`}
-                >
-                  {p}
-                </Link>
-              </li>
-            ))}
+            .map((p: string, i: number) => {
+              // Extract the filename without extension
+              const fileName = p.replace(/\.[^/.]+$/, '');
+
+              return (
+                <li key={i} className="flex flex-shrink-0 items-center">
+                  <FontAwesomeIcon className="h-3 w-3" icon="angle-right" />
+                  <Link
+                    href={`/${path
+                      .slice(0, path.length - i)
+                      .map((p) => encodeURIComponent(p))
+                      .join('/')}`}
+                    passHref
+                    className={`ml-1 transition-all duration-75 hover:opacity-70 md:ml-3 ${
+                      i === 0 && 'pointer-events-none opacity-80'
+                    }`}
+                  >
+                    {fileName}
+                  </Link>
+                </li>
+              );
+            })}
           <li className="flex-shrink-0 transition-all duration-75 hover:opacity-80">
             <HomeCrumb />
           </li>
         </ol>
-      )
+      );
     }
   }
 

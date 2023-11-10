@@ -39,7 +39,6 @@ import { PreviewContainer } from './previews/Containers'
 import FolderListLayout from './FolderListLayout'
 import FolderGridLayout from './FolderGridLayout'
 
-// Disabling SSR for some previews
 const EPUBPreview = dynamic(() => import('./previews/EPUBPreview'), {
   ssr: false,
 })
@@ -60,7 +59,6 @@ const queryToPath = (query?: ParsedUrlQuery) => {
   return '/'
 }
 
-// Render the icon of a folder child (may be a file or a folder), use emoji if the name of the child contains emoji
 const renderEmoji = (name: string) => {
   const emoji = emojiRegex().exec(name)
   return { render: emoji && !emoji.index, emoji }
@@ -136,11 +134,7 @@ export const Checkbox: FC<{
 export const Downloading: FC<{ title: string; style: string }> = ({ title, style }) => {
   return (
     <span title={title} className={`${style} rounded`} role="status">
-      <LoadingIcon
-        // Use fontawesome far theme via class `svg-inline--fa` to get style `vertical-align` only
-        // for consistent icon alignment, as class `align-*` cannot satisfy it
-        className="svg-inline--fa inline-block h-4 w-4 animate-spin"
-      />
+      <LoadingIcon className="svg-inline--fa inline-block h-4 w-4 animate-spin"/>
     </span>
   )
 }
@@ -162,7 +156,6 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
   const { data, error, size, setSize } = useProtectedSWRInfinite(path)
 
   if (error) {
-    // If error includes 403 which means the user has not completed initial setup, redirect to OAuth page
     if (error.status === 403) {
       router.push('/onedrive-oauth/step-1')
       return <div />
@@ -191,16 +184,12 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
   const onlyOnePage = data && typeof data[0].next === 'undefined'
 
   if ('folder' in responses[0]) {
-    // Expand list of API returns into flattened file data
     const folderChildren = [].concat(...responses.map(r => r.folder.value)) as OdFolderObject['value']
 
-    // Find README.md file to render
     const readmeFile = folderChildren.find(c => c.name.toLowerCase() === 'readme.md')
 
-    // Filtered file list helper
     const getFiles = () => folderChildren.filter(c => !c.folder && c.name !== '.password')
 
-    // File selection
     const genTotalSelected = (selected: { [key: string]: boolean }) => {
       const selectInfo = getFiles().map(c => Boolean(selected[c.id]))
       const [hasT, hasF] = [selectInfo.some(i => i), selectInfo.some(i => !i)]
@@ -229,7 +218,6 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
       }
     }
 
-    // Selected file download
     const handleSelectedDownload = () => {
       const folderName = path.substring(path.lastIndexOf('/') + 1)
       const folder = folderName ? decodeURIComponent(folderName) : undefined
@@ -265,7 +253,6 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
       }
     }
 
-    // Get selected file permalink
     const handleSelectedPermalink = (baseUrl: string) => {
       return getFiles()
         .filter(c => selected[c.id])
@@ -276,7 +263,6 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
         .join('\n')
     }
 
-    // Folder recursive download
     const handleFolderDownload = (path: string, id: string, name?: string) => () => {
       const files = (async function* () {
         for await (const { meta: c, path: p, isFolder, error } of traverseFolder(path)) {
@@ -314,7 +300,6 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
         })
     }
 
-    // Folder layout component props
     const folderProps = {
       toast,
       path,

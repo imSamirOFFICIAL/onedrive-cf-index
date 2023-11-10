@@ -64,9 +64,9 @@ const VideoPlayer: FC<{
     fullscreen: { iosNative: true },
     controls: ['play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'captions', 'fullscreen'],
     displayDuration: true,
+    enableCaptions: true,
     invertTime: false,
     autoplay: true,
-    captions: { active: true, update: true, language: 'auto' },
   };
   if (!isFlv) {
     // If the video is not in flv format, we can use the native plyr and add sources directly with the video URL

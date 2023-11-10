@@ -57,14 +57,13 @@ const VideoPlayer: FC<{
     type: 'video',
     title: videoName,
     poster: thumbnail,
-    tracks: [{ kind: 'captions', label: videoName, src: '', default: true }],
+    tracks: [{ kind: 'captions', label: videoName, src: '', default }],
   }
   const plyrOptions: Plyr.Options = {
     ratio: `${width ?? 16}:${height ?? 9}`,
     fullscreen: { iosNative: true },
     controls: ['play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'captions', 'fullscreen'],
     displayDuration: true,
-    enableCaptions: true,
     invertTime: false,
     autoplay: true,
   };

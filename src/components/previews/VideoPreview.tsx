@@ -50,6 +50,8 @@ const VideoPlayer: FC<{
       }
       loadFlv()
     }
+    const captionsButton = document.querySelector('.plyr__controls__item[data-plyr="captions"]');
+    captionsButton?.classList.add('plyr__control--pressed');
   }, [videoUrl, isFlv, mpegts, subtitle])
 
   // Common plyr configs, including the video source and plyr options
@@ -66,7 +68,7 @@ const VideoPlayer: FC<{
     displayDuration: true,
     invertTime: false,
     autoplay: true,
-    captions: { active: true, update: false, language: 'en' },
+    captions: { active: true, update: true, language: 'en' },
   };
   if (!isFlv) {
     // If the video is not in flv format, we can use the native plyr and add sources directly with the video URL

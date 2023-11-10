@@ -57,7 +57,7 @@ const VideoPlayer: FC<{
     type: 'video',
     title: videoName,
     poster: thumbnail,
-    tracks: [{ kind: 'captions', label: videoName, src: '' }],
+    tracks: [{ kind: 'captions', label: videoName, src: '', default: true }],
   }
   const plyrOptions: Plyr.Options = {
     ratio: `${width ?? 16}:${height ?? 9}`,
@@ -66,7 +66,6 @@ const VideoPlayer: FC<{
     displayDuration: true,
     invertTime: false,
     autoplay: true,
-    captions: { active: true },
   };
   if (!isFlv) {
     // If the video is not in flv format, we can use the native plyr and add sources directly with the video URL

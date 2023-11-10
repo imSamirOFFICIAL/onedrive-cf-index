@@ -53,7 +53,7 @@ const FolderListLayout = ({
       </div>
 
       {folderChildren
-        .filter((c: OdFolderChildren) => c.name.endsWith('.mkv') || c.name.endsWith('.mp4'))
+        .filter((c: OdFolderChildren) => c.folder || c.name.endsWith('.mkv') || c.name.endsWith('.mp4'))
         .map((c: OdFolderChildren) => (
           <div
             className="grid grid-cols-12 transition-all duration-100 hover:bg-gray-100 dark:hover:bg-gray-850"

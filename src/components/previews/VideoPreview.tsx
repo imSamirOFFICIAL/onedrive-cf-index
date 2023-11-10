@@ -57,7 +57,7 @@ const VideoPlayer: FC<{
     type: 'video',
     title: videoName,
     poster: thumbnail,
-    tracks: [{ kind: 'captions', label: videoName, src: '', default: true }],
+    tracks: [{ kind: 'captions', label: videoName, src: '' }],
   }
   const plyrOptions: Plyr.Options = {
     ratio: `${width ?? 16}:${height ?? 9}`,
@@ -66,20 +66,12 @@ const VideoPlayer: FC<{
     displayDuration: true,
     invertTime: false,
     autoplay: true,
-    captions: { active: true, update: true, language: 'en' },
+    captions: { active: true },
   };
   if (!isFlv) {
     // If the video is not in flv format, we can use the native plyr and add sources directly with the video URL
     plyrSource['sources'] = [{ src: videoUrl }]
   }
-  const plyrInstance = new Plyr("#plyr", {
-    source: plyrSource as Plyr.SourceInfo,
-    options: plyrOptions,
-  });
-  
-  // Manually add the pressed class to the captions button
-  const captionsButton = document.querySelector('.plyr__controls__item[data-plyr="captions"]');
-  captionsButton?.classList.add('plyr__control--pressed');
   return <Plyr id="plyr" source={plyrSource as Plyr.SourceInfo} options={plyrOptions} />
 }
 

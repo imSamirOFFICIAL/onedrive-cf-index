@@ -50,8 +50,6 @@ const VideoPlayer: FC<{
       }
       loadFlv()
     }
-    const captionsButton = document.querySelector('.plyr__controls__item[data-plyr="captions"]');
-    captionsButton?.classList.add('plyr__control--pressed');
   }, [videoUrl, isFlv, mpegts, subtitle])
 
   // Common plyr configs, including the video source and plyr options
@@ -74,6 +72,14 @@ const VideoPlayer: FC<{
     // If the video is not in flv format, we can use the native plyr and add sources directly with the video URL
     plyrSource['sources'] = [{ src: videoUrl }]
   }
+  const plyrInstance = new Plyr("#plyr", {
+    source: plyrSource as Plyr.SourceInfo,
+    options: plyrOptions,
+  });
+  
+  // Manually add the pressed class to the captions button
+  const captionsButton = document.querySelector('.plyr__controls__item[data-plyr="captions"]');
+  captionsButton?.classList.add('plyr__control--pressed');
   return <Plyr id="plyr" source={plyrSource as Plyr.SourceInfo} options={plyrOptions} />
 }
 

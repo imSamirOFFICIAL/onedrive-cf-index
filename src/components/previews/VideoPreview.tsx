@@ -66,7 +66,7 @@ const VideoPlayer: FC<{
     displayDuration: true,
     invertTime: false,
     autoplay: true,
-    captions: true,
+    captions: { active: true, update: true, language: 'auto' },
   };
   if (!isFlv) {
     // If the video is not in flv format, we can use the native plyr and add sources directly with the video URL
